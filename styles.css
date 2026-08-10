@@ -53,12 +53,20 @@ p {
 }
 
 h1 {
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   color: var(--ink);
-  font-size: clamp(2.7rem, 5.7vw, 5.5rem);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   font-weight: 650;
+}
+
+h1 span {
+  display: block;
+}
+
+h1 span + span {
+  margin-top: 0.3em;
 }
 
 .hero-copy p {
@@ -122,7 +130,7 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(2.45rem, 12vw, 4.8rem);
+    font-size: clamp(2rem, 9vw, 3.5rem);
   }
 
   .services {
