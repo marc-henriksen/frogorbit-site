@@ -1,27 +1,93 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="IHateRecruiters — real jobs, real questions, fewer pitches.">
+<meta name="description" content="IHateRecruiters | Jobs without the bullshit">
+<meta name="theme-color" content="#080808">
 <title>IHateRecruiters</title>
+<script>
+try { if (localStorage.getItem('ihr-theme') === 'light') document.documentElement.dataset.theme = 'light' } catch(e) {}
+</script>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#171717;background:#f8f5ed}*{box-sizing:border-box}body{margin:0}main{max-width:1050px;margin:auto;padding:8vh 28px}header{font-weight:900;letter-spacing:-.05em;font-size:clamp(24px,4vw,36px)}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-top:12vh}h1{font-size:clamp(52px,10vw,126px);letter-spacing:-.075em;line-height:.95;margin:24px 0;max-width:900px}p{font-size:clamp(19px,2.6vw,27px);line-height:1.45;max-width:690px}section{margin-top:100px;padding-top:24px;border-top:2px solid #171717}h2{font-size:clamp(28px,5vw,48px);letter-spacing:-.05em;margin:0 0 24px}.muted{color:#68645d}.tag{display:inline-block;background:#171717;color:#fff;padding:9px 14px;font-size:13px;font-weight:700}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;margin-top:34px}.step{border-top:1px solid #bbb5a9;padding-top:16px}.step strong{display:block;font-size:23px;letter-spacing:-.04em}.step p{font-size:16px}.num{font-size:13px;font-weight:800;color:#777067;margin-bottom:20px}.note{margin-top:32px;font-size:16px}.cta{display:inline-block;background:#171717;color:white;padding:14px 22px;font-size:16px;font-weight:750;text-decoration:none;border-radius:4px}.cta:focus-visible{outline:3px solid #6c77ec;outline-offset:3px}footer{margin:120px 0 20px;font-size:13px;color:#68645d}@media(max-width:650px){main{padding-top:35px}.eyebrow{margin-top:100px}.steps{grid-template-columns:1fr;gap:14px}section{margin-top:70px}}
+:root{color-scheme:dark;--bg:#080808;--ink:#fff;--accent:#D71945;--divider:#fff;--hover:#191919;--muted:#d5d5d5}
+:root[data-theme="light"]{color-scheme:light;--bg:#fff;--ink:#101010;--divider:#101010;--hover:#f3f3f3;--muted:#383838}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:clamp(26px,5vw,56px) 20px 40px}
+h1,h2,p{margin:0}
+.hero{margin-bottom:48px}
+h1{font-size:clamp(35px,7vw,62px);letter-spacing:-.065em;line-height:1.08;font-weight:850}
+.experiment{font-size:clamp(13px,2.5vw,15px);margin-top:8px;color:var(--muted)}
+.hero h2{font-size:clamp(29px,6vw,47px);letter-spacing:-.055em;line-height:1.1;margin-top:44px}
+.hero .subtitle{font-size:clamp(16px,3vw,20px);margin-top:10px}
+.cards{display:grid;gap:16px}
+.card{border:1px solid var(--divider);border-radius:13px;padding:22px 20px;background:var(--bg)}
+.card-link{display:block;color:inherit;text-decoration:none;transition:background .15s,border-color .15s}
+.card-link:hover,.card-link:focus-visible{background:var(--hover);border-color:var(--accent)}
+.card-link:focus-visible,.theme-option:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.card h3{font-size:clamp(19px,3.5vw,23px);letter-spacing:-.035em;line-height:1.25;margin:0;font-weight:750}
+.card p{margin-top:9px;font-size:16px}
+.arrow{display:grid;place-items:center;background:var(--accent);color:#fff;width:34px;height:34px;flex-shrink:0;border-radius:50%;font-size:21px;line-height:1}
+.browse-heading{margin-bottom:15px}
+.empty{border-top:1px solid var(--divider);padding-top:17px}
+.empty strong{display:block;font-size:16px}
+.empty p{font-size:14px;margin-top:5px;color:var(--muted)}
+.theme-area{display:flex;justify-content:center;margin:35px 0 22px}
+.theme-switch{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--divider);border-radius:999px;padding:5px}
+.theme-option{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:0;border-radius:999px;cursor:pointer;padding:9px 15px;min-width:84px}
+.theme-option[aria-pressed="true"]{background:var(--accent);color:#fff;font-weight:700}
+footer{text-align:center;font-size:13px;color:var(--muted);padding:0 8px 18px}
+@media(max-width:420px){main{padding-left:16px;padding-right:16px}.hero{margin-bottom:38px}.card{padding:19px 16px}.cards{gap:13px}}
+@media(prefers-reduced-motion:reduce){.card-link{transition:none}}
 </style>
 </head>
-<body><main>
-<header>IHateRecruiters<span aria-hidden="true">.</span></header>
-<div class="eyebrow">An experiment in professional networking</div>
-<h1>Jobs without the bullshit.</h1>
-<p>Real job openings. Real questions. Answers from people who might actually know.</p>
-<section aria-labelledby="different"><span class="tag">THE RULES</span><h2 id="different">What makes this different?</h2>
-<div class="steps">
-<div class="step"><div class="num">01</div><strong>Post the job. Not the pitch.</strong><p>Share a link to a real job opening. No sales copy, inspirational stories or employer-branding speeches.</p></div>
-<div class="step"><div class="num">02</div><strong>Questions first. Answers second.</strong><p>Ask what the job is really like. The person who shared it can answer, but can't start the conversation.</p></div>
-<div class="step"><div class="num">03</div><strong>No personal brand required.</strong><p>Use a pseudonym. No CV, profile picture or carefully curated career story.</p></div>
-</div>
-<p class="note muted">You won't need an account just to browse. When participation opens, you'll be able to create a pseudonymous account to share jobs and join discussions.</p>
+<body>
+<main>
+<header class="hero">
+<h1>IHateRecruiters</h1>
+<p class="experiment">Still experimental - I don't know what I'm doing yet</p>
+<h2>Jobs without the bullshit</h2>
+<p class="subtitle">A professional social network without the social</p>
+</header>
+<div class="cards">
+<a class="card card-link" href="./what-makes-this-different/" aria-label="What makes this different?">
+<div class="card-head"><h3>1. What makes this different?</h3><span class="arrow" aria-hidden="true">↗</span></div>
+</a>
+<a class="card card-link" href="./contribute/" aria-label="Contribute - know of a job posting you would like to share?">
+<div class="card-head"><div><h3>2. Contribute</h3><p>Know of a job posting you would like to share?</p></div><span class="arrow" aria-hidden="true">↗</span></div>
+</a>
+<section class="card" aria-labelledby="browse-heading">
+<div class="browse-heading"><h3 id="browse-heading">3. Browse</h3></div>
+<div class="empty" role="status"><strong>No jobs yet. How embarrassing</strong><p>Know of one? Be the first to share it</p></div>
 </section>
-<section><h2>It's a social network where we removed social.</h2><p>Less self-promotion. More signal. Built around the people doing the work.</p><p class="muted">Early concept. Job browsing and accounts aren't live yet.</p></section>
-<footer>IHateRecruiters — a FrogOrbit experiment.</footer>
-</main></body></html>
+</div>
+<div class="theme-area">
+<div class="theme-switch" role="group" aria-label="Color theme">
+<button class="theme-option" type="button" data-choice="light" aria-pressed="false">☀ Light</button>
+<button class="theme-option" type="button" data-choice="dark" aria-pressed="true">☾ Dark</button>
+</div>
+</div>
+<footer>No recruiters were harmed in the making of this website</footer>
+</main>
+<script>
+(function(){
+const buttons=document.querySelectorAll('.theme-option');
+const themeColor=document.querySelector('meta[name="theme-color"]');
+function apply(theme){
+document.documentElement.dataset.theme=theme;
+buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.choice===theme)));
+themeColor.setAttribute('content',theme==='light'?'#FFFFFF':'#080808');
+try{localStorage.setItem('ihr-theme',theme)}catch(e){}
+}
+let initial='dark';
+try{if(localStorage.getItem('ihr-theme')==='light')initial='light'}catch(e){}
+apply(initial);
+buttons.forEach(button=>button.addEventListener('click',()=>apply(button.dataset.choice)));
+})();
+</script>
+</body>
+</html>
