@@ -98,13 +98,13 @@ let page=0;const size=10;
 function status(message){const p=document.createElement('p');p.className='feed-status';p.textContent=message;feed.replaceChildren(p)}
 async function load(){
  status('Loading jobs…');nav.hidden=true;
- const {data,error,count}=await db.from('jobs').select('title,company,url,created_at,expires_at',{count:'exact'}).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).range(page*size,page*size+size-1);
+ const {data,error,count}=await db.from('jobs').select('id,title,company,url,created_at,expires_at',{count:'exact'}).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).range(page*size,page*size+size-1);
  if(error){status('Could not load jobs. Please try again later');return}
  feed.replaceChildren();
  if(!data.length){const empty=document.createElement('div');empty.className='empty';const strong=document.createElement('strong');strong.textContent=page?'No more jobs':'No jobs yet. How embarrassing';const p=document.createElement('p');p.textContent='Know of one? Be the first to share it';empty.append(strong,p);feed.append(empty)}
  for(const job of data){
  const row=document.createElement('article');row.className='job-row';
- const h=document.createElement('h4'),link=document.createElement('a');link.href=job.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=job.title;h.append(link);
+ const h=document.createElement('h4'),link=document.createElement('a');link.href='./job/?id='+encodeURIComponent(job.id);link.textContent=job.title;h.append(link);
  const company=document.createElement('p');company.className='company';company.textContent=job.company;
  const meta=document.createElement('p');meta.className='meta';meta.textContent='Shared '+new Date(job.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+' · Expires '+new Date(job.expires_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
  row.append(h,company,meta);feed.append(row)
