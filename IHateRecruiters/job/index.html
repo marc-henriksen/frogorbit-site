@@ -11,7 +11,7 @@ let job=null;
 function node(tag,cls,content){const n=document.createElement(tag);if(cls)n.className=cls;if(content!==undefined)n.textContent=content;return n}
 async function loadJob(){
  if(!validId){$('job').replaceChildren(node('h1','', 'Job not found'));$('comments').textContent='';$('contribute').hidden=true;return}
- const {data,error}=await db.from('jobs').select('id,title,company,url,author_id,expires_at').eq('id',id).gt('expires_at',new Date().toISOString()).maybeSingle();
+ const {data,error}=await db.from('jobs').select('id,title,company,url,author_id,created_at,expires_at').eq('id',id).gt('expires_at',new Date().toISOString()).maybeSingle();
  if(error||!data){$('job').replaceChildren(node('h1','','This job is no longer available'));$('comments').textContent='';$('contribute').hidden=true;return}
  job=data;const heading=node('h1','',job.title),company=node('p','',job.company),expires=node('p','muted','Available until '+new Date(job.expires_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
  const link=node('a','external','View original job posting ↗');link.href=job.url;link.target='_blank';link.rel='noopener noreferrer';$('job').replaceChildren(heading,company,expires,link);
