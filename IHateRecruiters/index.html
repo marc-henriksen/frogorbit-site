@@ -43,7 +43,7 @@ h1{font-size:clamp(35px,7vw,62px);letter-spacing:normal;line-height:1.08;font-we
 footer{text-align:center;font-size:13px;color:var(--muted);padding:0 8px 18px}footer .byline{display:block;margin-top:9px;font-size:11px}
 @media(max-width:420px){main{padding-left:16px;padding-right:16px}.hero{margin-bottom:38px}.card{padding:19px 16px}.cards{gap:13px}}
 @media(prefers-reduced-motion:reduce){.card-link{transition:none}}
-</style>
+.job-row{border-top:1px solid var(--divider);padding:16px 0}.job-row h4{font-size:17px;line-height:1.35;margin:0}.job-row h4 a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--accent)}.job-row .company{font-weight:650;margin:5px 0 0;font-size:15px}.job-row .meta{font-size:13px;color:var(--muted);margin:5px 0 0}.feed-status{font-size:14px;color:var(--muted);padding-top:12px}#job-pages{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}#job-pages button{font:inherit;font-size:13px;background:var(--bg);color:var(--ink);border:1px solid var(--divider);border-radius:8px;padding:9px 12px;cursor:pointer}#job-pages button:disabled{opacity:.4;cursor:default}[hidden]{display:none!important}</style>
 </head>
 <body>
 <main>
@@ -62,7 +62,7 @@ footer{text-align:center;font-size:13px;color:var(--muted);padding:0 8px 18px}fo
 </a>
 <section class="card" aria-labelledby="browse-heading">
 <div class="browse-heading"><h3 id="browse-heading">3. Browse</h3></div>
-<div class="empty" role="status"><strong>No jobs yet. How embarrassing</strong><p>Know of one? Be the first to share it</p></div>
+<div id="job-feed" aria-live="polite"><p class="feed-status">Loading jobs…</p></div><nav id="job-pages" aria-label="Job pages" hidden><button id="job-previous" type="button">← Previous</button><span id="job-page-number"></span><button id="job-next" type="button">Next →</button></nav>
 </section>
 </div>
 <div class="theme-area">
@@ -89,5 +89,30 @@ apply(initial);
 buttons.forEach(button=>button.addEventListener('click',()=>apply(button.dataset.choice)));
 })();
 </script>
-</body>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const db=createClient('https://pvtwxtnbsospauqkrbek.supabase.co','sb_publishable_I2QGmFehSnVkANPPWNaxkQ_dQLBvSh_');
+const feed=document.getElementById('job-feed'),nav=document.getElementById('job-pages');
+const previous=document.getElementById('job-previous'),next=document.getElementById('job-next'),pageLabel=document.getElementById('job-page-number');
+let page=0;const size=10;
+function status(message){const p=document.createElement('p');p.className='feed-status';p.textContent=message;feed.replaceChildren(p)}
+async function load(){
+ status('Loading jobs…');nav.hidden=true;
+ const {data,error,count}=await db.from('jobs').select('title,company,url,created_at,expires_at',{count:'exact'}).gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).range(page*size,page*size+size-1);
+ if(error){status('Could not load jobs. Please try again later');return}
+ feed.replaceChildren();
+ if(!data.length){const empty=document.createElement('div');empty.className='empty';const strong=document.createElement('strong');strong.textContent=page?'No more jobs':'No jobs yet. How embarrassing';const p=document.createElement('p');p.textContent='Know of one? Be the first to share it';empty.append(strong,p);feed.append(empty)}
+ for(const job of data){
+ const row=document.createElement('article');row.className='job-row';
+ const h=document.createElement('h4'),link=document.createElement('a');link.href=job.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=job.title;h.append(link);
+ const company=document.createElement('p');company.className='company';company.textContent=job.company;
+ const meta=document.createElement('p');meta.className='meta';meta.textContent='Shared '+new Date(job.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+' · Expires '+new Date(job.expires_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+ row.append(h,company,meta);feed.append(row)
+ }
+ const total=count||0;nav.hidden=total<=size&&page===0;previous.disabled=page===0;next.disabled=(page+1)*size>=total;pageLabel.textContent='Page '+(page+1)+' of '+Math.max(1,Math.ceil(total/size));
+}
+previous.addEventListener('click',()=>{if(page>0){page--;load()}});
+next.addEventListener('click',()=>{page++;load()});
+load().catch(()=>status('Could not load jobs. Please try again later'));
+</script></body>
 </html>
