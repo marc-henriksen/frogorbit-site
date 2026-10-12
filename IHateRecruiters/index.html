@@ -91,6 +91,8 @@ buttons.forEach(button=>button.addEventListener('click',()=>apply(button.dataset
 </script>
 <script type="module">
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import {track} from './analytics.js';
+track('page_view','home');
 const db=createClient('https://pvtwxtnbsospauqkrbek.supabase.co','sb_publishable_I2QGmFehSnVkANPPWNaxkQ_dQLBvSh_');
 const feed=document.getElementById('job-feed'),nav=document.getElementById('job-pages');
 const previous=document.getElementById('job-previous'),next=document.getElementById('job-next'),pageLabel=document.getElementById('job-page-number');
