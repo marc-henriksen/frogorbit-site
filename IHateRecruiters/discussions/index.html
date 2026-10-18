@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#080808">
+<title>Discussions | IHateRecruiters</title>
+<script>try{if(localStorage.getItem('ihr-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<style>
+:root{color-scheme:dark;--bg:#080808;--ink:#fff;--accent:#D71945;--muted:#d5d5d5;--hover:#191919}
+:root[data-theme=light]{color-scheme:light;--bg:#fff;--ink:#101010;--muted:#383838;--hover:#f3f3f3}
+*{box-sizing:border-box}html,body{background:var(--bg)}body{margin:0;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:auto;padding:32px 20px 55px}a{color:inherit}button,input,textarea{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:52px}.brand{font-size:20px;font-weight:850;text-decoration:none}.back{font-size:14px;text-decoration:none;border-bottom:1px solid var(--accent)}
+.kicker{color:var(--accent);font-size:13px;font-weight:800;text-transform:uppercase;margin-bottom:14px}h1{font-size:clamp(35px,7vw,58px);line-height:1.08;margin:0 0 15px}h2{font-size:clamp(23px,4vw,31px);margin:0 0 12px}h3{font-size:20px;line-height:1.3;margin:9px 0}p{margin:0 0 16px}.muted{color:var(--muted);font-size:14px}.section{border-top:1px solid var(--ink);padding-top:26px;margin-top:32px}
+.field{display:block;width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:12px;margin:8px 0 16px}textarea{min-height:115px;resize:vertical}
+label{font-size:14px;font-weight:700}.types{display:grid;gap:9px;margin:12px 0 20px}.types label{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer}.types input{accent-color:var(--accent)}
+.primary{display:inline-block;border:0;border-radius:8px;background:var(--accent);color:#fff;padding:12px 16px;font-weight:750}.primary:disabled{opacity:.45;cursor:default}
+.post{border:1px solid var(--ink);border-radius:12px;padding:19px;margin:14px 0;overflow-wrap:anywhere}.post p{white-space:pre-wrap}.post .muted{margin:0}.tag{display:inline-block;color:var(--accent);font-size:12px;font-weight:800;text-transform:uppercase;margin-right:9px}.post-title{color:var(--ink);font-weight:750;text-decoration:none;border-bottom:2px solid var(--accent)}
+.reply{border-left:2px solid var(--accent);padding:8px 0 8px 15px;margin:15px 0 0}.reply p{margin:5px 0 0;white-space:pre-wrap}
+#pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}#pagination button{background:var(--bg);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:9px 12px}#pagination button:disabled{opacity:.4}
+.theme-area{display:flex;justify-content:center;margin:45px 0 20px}.theme-switch{display:inline-flex;gap:5px;border:1px solid var(--ink);border-radius:999px;padding:5px}.theme-option{font-size:13px;color:var(--ink);background:transparent;border:0;border-radius:999px;padding:9px 15px}.theme-option[aria-pressed=true]{background:var(--accent);color:#fff;font-weight:700}
+footer{text-align:center;font-size:13px;color:var(--muted)}footer small{display:block;margin-top:9px}[hidden]{display:none!important}
+@media(max-width:420px){main{padding:26px 16px 45px}.top{margin-bottom:40px}}
+</style></head>
+<body><main><nav class="top"><a class="brand" href="../">IHateRecruiters</a><a class="back" href="../">← Back</a></nav>
+<div class="kicker">4. Discussions</div><h1>Discussions</h1><p>Help shape IHateRecruiters or talk about job hunting. No profiles, no personal brands. Just the conversation</p>
+<section class="section"><h2>Start a discussion</h2><p id="auth-status" class="muted" role="status">Checking sign-in…</p>
+<form id="login-form" hidden><label for="login-email">Sign in with your email to post or reply</label><input class="field" id="login-email" type="email" required placeholder="you@example.com"><button class="primary" type="submit">Send sign-in link →</button></form>
+<form id="post-form" hidden>
+<label>What would you like to post?</label>
+<div class="types" role="radiogroup" aria-label="Discussion type">
+<label><input type="radio" name="category" value="feedback" checked>Feedback on IHateRecruiters</label>
+<label><input type="radio" name="category" value="feature">Feature request</label>
+<label><input type="radio" name="category" value="community">Job hunting discussion</label></div>
+<label for="post-title">Title</label><input class="field" id="post-title" maxlength="160" minlength="3" required placeholder="What's on your mind?">
+<label for="post-body">Your post</label><textarea class="field" id="post-body" maxlength="5000" minlength="2" required placeholder="Say what you actually think"></textarea>
+<button class="primary" type="submit">Post discussion →</button></form>
+<p id="action-status" class="muted" role="status" aria-live="polite"></p></section>
+<section class="section"><h2>Recent discussions</h2><div id="feed" aria-live="polite"><p class="muted">Loading discussions…</p></div>
+<nav id="pagination" hidden aria-label="Discussion pages"><button id="previous" type="button">← Previous</button><span id="page-number" class="muted"></span><button id="next" type="button">Next →</button></nav></section>
+<div class="theme-area"><div class="theme-switch" role="group" aria-label="Color theme"><button class="theme-option" type="button" data-choice="light" aria-pressed="false">☀ Light</button><button class="theme-option" type="button" data-choice="dark" aria-pressed="true">☾ Dark</button></div></div>
+<footer>No recruiters were harmed in the making of this website<small>© 2026 IHateRecruiters</small></footer></main>
+<script>(function(){const b=document.querySelectorAll('.theme-option');function apply(t){document.documentElement.dataset.theme=t;b.forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.choice===t)));try{localStorage.setItem('ihr-theme',t)}catch(e){}}let t='dark';try{if(localStorage.getItem('ihr-theme')==='light')t='light'}catch(e){}apply(t);b.forEach(x=>x.addEventListener('click',()=>apply(x.dataset.choice)))})()</script>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import {track} from '../analytics.js';
+track('page_view','discussions');
+const db=createClient('https://pvtwxtnbsospauqkrbek.supabase.co','sb_publishable_I2QGmFehSnVkANPPWNaxkQ_dQLBvSh_');
+const $=id=>document.getElementById(id),labels={feedback:'Feedback',feature:'Feature request',community:'Job hunting discussion'};
+const date=s=>new Date(s).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+let user=null,page=0;const size=10;
+function node(tag,cls,value){const el=document.createElement(tag);if(cls)el.className=cls;if(value!==undefined)el.textContent=value;return el}
+function message(s){$('action-status').textContent=s}
+async function auth(){const {data:{user:u}}=await db.auth.getUser();user=u;$('login-form').hidden=!!user;$('post-form').hidden=!user;$('auth-status').textContent=user?'Signed in as '+user.email:'Read freely. Sign in to post or reply'}
+$('login-form').addEventListener('submit',async e=>{e.preventDefault();message('Sending sign-in link…');const {error}=await db.auth.signInWithOtp({email:$('login-email').value.trim(),options:{emailRedirectTo:location.origin+location.pathname}});message(error?error.message:'Check your inbox for your sign-in link')});
+$('post-form').addEventListener('submit',async e=>{
+e.preventDefault();if(!user)return;const b=e.currentTarget.querySelector('button');b.disabled=true;message('Posting…');
+const {error}=await db.from('discussion_posts').insert({category:e.currentTarget.elements.category.value,title:$('post-title').value.trim(),body:$('post-body').value.trim()});
+if(error)message(error.message);else{e.currentTarget.reset();message('Discussion posted');page=0;await load()}
+b.disabled=false;
+});
+async function load(){
+const feed=$('feed');feed.replaceChildren(node('p','muted','Loading discussions…'));$('pagination').hidden=true;
+const {data,error,count}=await db.from('discussion_posts').select('id,category,title,body,created_at,moderated_at',{count:'exact'}).order('created_at',{ascending:false}).range(page*size,page*size+size-1);
+feed.replaceChildren();
+if(error){feed.append(node('p','muted','Could not load discussions'));return}
+if(!data.length)feed.append(node('p','muted',page?'No more discussions':'No discussions yet. Be the first to start one'));
+for(const p of data){
+const card=node('article','post');const tag=node('span','tag',labels[p.category]||'Discussion');const meta=node('span','muted',date(p.created_at));const h=node('h3');const link=node('a','post-title',p.title);link.href='./?id='+encodeURIComponent(p.id);h.append(link);
+const preview=node('p','',p.body.length>240?p.body.slice(0,240)+'…':p.body);card.append(tag,meta,h,preview);feed.append(card);
+}
+const total=count||0;$('pagination').hidden=total<=size&&page===0;$('previous').disabled=page===0;$('next').disabled=(page+1)*size>=total;$('page-number').textContent='Page '+(page+1)+' of '+Math.max(1,Math.ceil(total/size));
+}
+$('previous').addEventListener('click',()=>{if(page>0){page--;load()}});
+$('next').addEventListener('click',()=>{page++;load()});
+async function detail(id){
+$('post-form').hidden=true;$('post-form').parentElement.querySelector('h2').textContent='Join the conversation';
+const {data:p,error}=await db.from('discussion_posts').select('id,category,title,body,created_at').eq('id',id).maybeSingle();
+const feed=$('feed');$('pagination').hidden=true;feed.replaceChildren();
+if(error||!p){feed.append(node('p','muted','Discussion not found'));return}
+const card=node('article','post');card.append(node('span','tag',labels[p.category]||'Discussion'),node('span','muted',date(p.created_at)),node('h3','',p.title),node('p','',p.body));feed.append(card);
+const replies=node('div');feed.append(replies);
+async function loadReplies(){const {data,error}=await db.from('discussion_replies').select('id,body,created_at').eq('post_id',id).order('created_at',{ascending:true});replies.replaceChildren();if(error){replies.append(node('p','muted','Could not load replies'));return}if(!data.length)replies.append(node('p','muted','No replies yet'));for(const r of data){const box=node('div','reply');box.append(node('span','muted',date(r.created_at)),node('p','',r.body));replies.append(box)}}
+await loadReplies();
+const form=node('form');form.id='reply-form';const label=node('label','', 'Your reply');label.htmlFor='reply-body';const area=node('textarea','field');area.id='reply-body';area.minLength=2;area.maxLength=2000;area.required=true;const submit=node('button','primary','Post reply →');submit.type='submit';form.append(label,area,submit);feed.append(form);
+function update(){form.hidden=!user}
+update();db.auth.onAuthStateChange(()=>setTimeout(async()=>{await auth();update()},0));
+form.addEventListener('submit',async e=>{e.preventDefault();if(!user)return;submit.disabled=true;message('Posting reply…');const {error}=await db.from('discussion_replies').insert({post_id:id,body:area.value.trim()});if(error)message(error.message);else{area.value='';message('Reply posted');await loadReplies()}submit.disabled=false});
+}
+const id=new URLSearchParams(location.search).get('id');const validId=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id||'');
+db.auth.onAuthStateChange(()=>setTimeout(auth,0));
+auth().then(()=>id?(validId?detail(id):$('feed').replaceChildren(node('p','muted','Invalid discussion link'))):load()).catch(()=>message('Could not load discussions'));
+</script></body></html>
