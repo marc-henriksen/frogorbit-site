@@ -46,10 +46,10 @@ track('page_view','discussions');
 const db=createClient('https://pvtwxtnbsospauqkrbek.supabase.co','sb_publishable_I2QGmFehSnVkANPPWNaxkQ_dQLBvSh_');
 const $=id=>document.getElementById(id),labels={feedback:'Feedback',feature:'Feature request',community:'Job hunting discussion'};
 const date=s=>new Date(s).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-let user=null,page=0;const size=10;
+let user=null,page=0;const size=10;const detailMode=new URLSearchParams(location.search).has('id');
 function node(tag,cls,value){const el=document.createElement(tag);if(cls)el.className=cls;if(value!==undefined)el.textContent=value;return el}
 function message(s){$('action-status').textContent=s}
-async function auth(){const {data:{user:u}}=await db.auth.getUser();user=u;$('login-form').hidden=!!user;$('post-form').hidden=!user;$('auth-status').textContent=user?'Signed in as '+user.email:'Read freely. Sign in to post or reply'}
+async function auth(){const {data:{user:u}}=await db.auth.getUser();user=u;$('login-form').hidden=!!user;$('post-form').hidden=!user||detailMode;$('auth-status').textContent=user?'Signed in as '+user.email:'Read freely. Sign in to post or reply'}
 $('login-form').addEventListener('submit',async e=>{e.preventDefault();message('Sending sign-in link…');const {error}=await db.auth.signInWithOtp({email:$('login-email').value.trim(),options:{emailRedirectTo:location.origin+location.pathname}});message(error?error.message:'Check your inbox for your sign-in link')});
 $('post-form').addEventListener('submit',async e=>{
 e.preventDefault();if(!user)return;const b=e.currentTarget.querySelector('button');b.disabled=true;message('Posting…');
@@ -74,7 +74,7 @@ $('next').addEventListener('click',()=>{page++;load()});
 async function detail(id){
 $('post-form').hidden=true;$('post-form').parentElement.querySelector('h2').textContent='Join the conversation';
 const {data:p,error}=await db.from('discussion_posts').select('id,category,title,body,created_at').eq('id',id).maybeSingle();
-const feed=$('feed');$('pagination').hidden=true;feed.replaceChildren();
+const feed=$('feed');$('pagination').hidden=true;$('feed').parentElement.querySelector('h2').textContent='Discussion';feed.replaceChildren();
 if(error||!p){feed.append(node('p','muted','Discussion not found'));return}
 const card=node('article','post');card.append(node('span','tag',labels[p.category]||'Discussion'),node('span','muted',date(p.created_at)),node('h3','',p.title),node('p','',p.body));feed.append(card);
 const replies=node('div');feed.append(replies);
