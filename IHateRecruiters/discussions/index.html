@@ -50,7 +50,7 @@ let user=null,page=0;const size=10;const detailMode=new URLSearchParams(location
 function node(tag,cls,value){const el=document.createElement(tag);if(cls)el.className=cls;if(value!==undefined)el.textContent=value;return el}
 function message(s){$('action-status').textContent=s}
 async function auth(){const {data:{user:u}}=await db.auth.getUser();user=u;$('login-form').hidden=!!user;$('post-form').hidden=!user||detailMode;$('auth-status').textContent=user?'Signed in as '+user.email:'Read freely. Sign in to post or reply'}
-$('login-form').addEventListener('submit',async e=>{e.preventDefault();message('Sending sign-in link…');const {error}=await db.auth.signInWithOtp({email:$('login-email').value.trim(),options:{emailRedirectTo:location.origin+location.pathname}});message(error?error.message:'Check your inbox for your sign-in link')});
+$('login-form').addEventListener('submit',async e=>{e.preventDefault();message('Sending sign-in link…');const {error}=await db.auth.signInWithOtp({email:$('login-email').value.trim(),options:{emailRedirectTo:location.origin+location.pathname+location.search}});message(error?error.message:'Check your inbox for your sign-in link')});
 $('post-form').addEventListener('submit',async e=>{
 e.preventDefault();if(!user)return;const b=e.currentTarget.querySelector('button');b.disabled=true;message('Posting…');
 const {error}=await db.from('discussion_posts').insert({category:e.currentTarget.elements.category.value,title:$('post-title').value.trim(),body:$('post-body').value.trim()});
